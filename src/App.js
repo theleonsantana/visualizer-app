@@ -5,9 +5,9 @@ import './App.scss';
 function App() {
 	return (
 		<div className="App">
-			<header className="App-header">
+			{/* <header className="App-header">
 				<a href="http://localhost:3000/api/v1/login">Log in to Spotify</a>
-			</header>
+			</header> */}
 		</div>
 	);
 }
