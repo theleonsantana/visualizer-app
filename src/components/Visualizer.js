@@ -5,16 +5,31 @@ const userData = 'http://localhost:3000/api/v1/users';
 
 export default class Visualizer extends Component {
 	state = {
-		SpotifyData: {},
+		spotifyData: {},
 	};
+
 	componentDidMount() {
-		const { access_token } = this.state.SpotifyData;
-		axios
-			.get(`${userData}`)
-			.then(({ data }) => this.setState({ SpotifyData: data }))
-			.catch(({ response }) => console.log(response));
-		localStorage.setItem('access_token', access_token);
+		this.getUser();
+		// this.storeToken();
 	}
+
+	getUser = () => {
+		axios
+			.get(userData)
+			.then(({ data }) => {
+				this.setState({ spotifyData: data[0] });
+				localStorage.setItem('access_token', data[0].access_token);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+	};
+
+	// storeToken = () => {
+	// 	const { access_token } = this.state;
+	// 	console.log(access_token);
+	// };
+
 	render() {
 		return <div>Visualizer App</div>;
 	}
