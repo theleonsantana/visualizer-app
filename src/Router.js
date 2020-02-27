@@ -10,7 +10,7 @@ export const AppRouter = () => {
 	return (
 		<Switch>
 			<Route exact path="/" component={LoginPage} />
-			<Route exact path="/app" component={Visualizer} />
+			<ProtectedRoute exact path="/app" component={Visualizer} />
 			<Route path="*" component={() => '404 NOT FOUND'} />
 		</Switch>
 	);

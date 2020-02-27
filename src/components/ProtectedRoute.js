@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Cookies from 'js-cookie';
 import { Route, Redirect } from 'react-router-dom';
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
@@ -7,7 +7,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
 		<Route
 			{...rest}
 			render={props => {
-				if (localStorage.getItem('access_token') !== null) {
+				if (Cookies.get('access_token_visualizer') !== '') {
 					return <Component {...props} />;
 				} else {
 					return (
