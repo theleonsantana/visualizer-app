@@ -1,36 +1,39 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-
-const userData = 'http://localhost:3000/api/v1/users';
+import Cookies from 'js-cookie';
+import { Logout } from './Logout';
 
 export default class Visualizer extends Component {
-	state = {
-		spotifyData: {},
-	};
-
-	componentDidMount() {
-		this.getUser();
-		// this.storeToken();
-	}
-
-	getUser = () => {
-		axios
-			.get(userData)
-			.then(({ data }) => {
-				this.setState({ spotifyData: data[0] });
-				localStorage.setItem('access_token', data[0].access_token);
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
-	};
-
-	// storeToken = () => {
-	// 	const { access_token } = this.state;
-	// 	console.log(access_token);
+	// getUser = () => {
+	// 	axios
+	// 		.get(userData)
+	// 		.then(({ data }) => {
+	// 			this.setState({ spotifyData: data[0] });
+	// 			localStorage.setItem(
+	// 				'access_token',
+	// 				this.state.spotifyData.access_token
+	// 			);
+	// 		})
+	// 		.catch(function(error) {
+	// 			console.log(error);
+	// 		});
 	// };
 
+	handleLogout = cookieName => {
+		const { history } = this.props;
+		Cookies.remove(cookieName);
+		history.push('/');
+	};
 	render() {
-		return <div>Visualizer App</div>;
+		return (
+			<div>
+				<h1>Visualizer App</h1>
+
+				<Logout
+					logout={() => {
+						this.handleLogout('access_token_visualizer');
+					}}
+				/>
+			</div>
+		);
 	}
 }
