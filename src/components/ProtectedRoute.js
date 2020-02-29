@@ -7,7 +7,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
 		<Route
 			{...rest}
 			render={props => {
-				if (Cookies.get('access_token_visualizer') !== '') {
+				if (document.cookie !== '') {
 					return <Component {...props} />;
 				} else {
 					return (
