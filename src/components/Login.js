@@ -6,7 +6,7 @@ export const LoginPage = () => {
 	return (
 		<div>
 			<p>Login Page</p>
-			<a href={LoginRoute}>Login</a>
+			<a href={LoginRoute}>Login with Spotify</a>
 		</div>
 	);
 };

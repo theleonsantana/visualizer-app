@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { Logout } from './Logout';
+import { Profile } from './Profile';
+import Player from './Player';
 
 // API endpoints
 const userMe = 'https://api.spotify.com/v1/me';
@@ -10,15 +11,15 @@ export default class Visualizer extends Component {
 	state = {
 		current_user: '',
 		access_token: '',
-		userInfo: {},
+		userInfo: [],
 	};
 
 	getUser() {
-		// const { current_user, access_token } = this.state;
+		const { userInfo } = this.state;
 		const auth = `Bearer ${Cookies.get('access_token_visualizer')}`;
 		// console.log(this.state.current_user);
 		axios
-			.get(userMe, { headers: { Authorization: auth } })
+			.get(userMe, { headers: { Authorization: auth }, responseType: 'json' })
 			.then(({ data }) => {
 				this.setState({ userInfo: data });
 			})
@@ -33,23 +34,14 @@ export default class Visualizer extends Component {
 		this.getUser();
 	}
 
-	handleLogout = (cookieName, userId) => {
-		const { history } = this.props;
-		Cookies.remove(cookieName);
-		Cookies.remove(userId);
-		history.push('/');
-	};
-
 	render() {
+		const { access_token, userInfo } = this.state;
+
 		return (
 			<div>
 				<h1>Visualizer App</h1>
-
-				<Logout
-					logout={() => {
-						this.handleLogout('access_token_visualizer', 'user_id');
-					}}
-				/>
+				<Player />
+				<Profile user={userInfo} />
 			</div>
 		);
 	}
